@@ -31,7 +31,11 @@ namespace IcsManagerGUI
                 MessageBox.Show("Please restart this program with administrative priviliges.");
                 Close();
             }
-            
+            catch (NotImplementedException)
+            {
+                MessageBox.Show("This program is not supported on your operating system.");
+                Close();
+            }
         }
 
         private void AddNic(NetworkInterface nic)
