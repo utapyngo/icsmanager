@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcsManagerLibrary", "IcsMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcsManagerConsole", "IcsManagerConsole\IcsManagerConsole.csproj", "{9D05B98A-88C9-4FAC-9FE6-D45CBF87ABC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcsManagerGUI", "IcsManagerGUI\IcsManagerGUI.csproj", "{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{9D05B98A-88C9-4FAC-9FE6-D45CBF87ABC6}.Release|Mixed Platforms.Build.0 = Release|x86
 		{9D05B98A-88C9-4FAC-9FE6-D45CBF87ABC6}.Release|x86.ActiveCfg = Release|x86
 		{9D05B98A-88C9-4FAC-9FE6-D45CBF87ABC6}.Release|x86.Build.0 = Release|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Debug|x86.ActiveCfg = Debug|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Debug|x86.Build.0 = Debug|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Release|Any CPU.ActiveCfg = Release|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Release|Mixed Platforms.Build.0 = Release|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Release|x86.ActiveCfg = Release|x86
+		{7A1F70BF-0B82-4E39-9E4D-3CB6147831F9}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
