@@ -47,12 +47,12 @@ namespace IcsManagerLibrary
 
         public static INetSharingConfiguration GetConfiguration(INetConnection netShareConnection)
         {
-            return SharingManager.INetSharingConfigurationForINetConnection[netShareConnection];
+            return SharingManager.get_INetSharingConfigurationForINetConnection(netShareConnection);
         }
 
         public static INetConnectionProps GetProperties(INetConnection netShareConnection)
         {
-            return SharingManager.NetConnectionProps[netShareConnection];
+            return SharingManager.get_NetConnectionProps(netShareConnection);
         }
 
 
