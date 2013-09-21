@@ -59,6 +59,11 @@ namespace IcsManagerConsole
                 {
                     Console.WriteLine("Please run this program with Admin rights to see all properties");
                 }
+                catch (NotImplementedException e)
+                {
+                    Console.WriteLine("This feature is not supported on your operating system.");
+                    Console.WriteLine(e.StackTrace);
+                }
                 Console.WriteLine();
             }
         }
@@ -171,6 +176,10 @@ namespace IcsManagerConsole
                         Console.WriteLine("This operation requires elevation.");
                     }
                 }
+            }
+            catch (NotImplementedException e)
+            {
+                Console.WriteLine("This program is not supported on your operating system.");
             }
             finally
             {
