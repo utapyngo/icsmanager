@@ -63,13 +63,7 @@ namespace IcsManagerLibrary
 
         public static INetConnection FindConnectionByIdOrName(string shared)
         {
-            INetConnection conn;
-            conn = GetConnectionById(shared);
-            if (conn == null)
-            {
-                conn = GetConnectionByName(shared);
-            }
-            return conn;
+            return GetConnectionById(shared) ?? GetConnectionByName(shared);
         }
 
         public static INetConnection GetConnectionById(string guid)
