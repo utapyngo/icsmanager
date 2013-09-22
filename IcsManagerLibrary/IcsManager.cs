@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.NetworkInformation;
 using NETCONLib;
 
 namespace IcsManagerLibrary
@@ -6,6 +8,15 @@ namespace IcsManagerLibrary
     public class IcsManager
     {
         private static readonly INetSharingManager SharingManager = new NetSharingManager();
+
+        public static IEnumerable<NetworkInterface> GetIPv4EthernetInterfaces()
+        {
+            return
+                from nic in NetworkInterface.GetAllNetworkInterfaces()
+                where nic.Supports(NetworkInterfaceComponent.IPv4)
+                where nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet
+                select nic;
+        }
 
         public static NetShare GetCurrentlySharedConnections()
         {
@@ -45,14 +56,14 @@ namespace IcsManagerLibrary
             }
         }
 
-        public static INetSharingConfiguration GetConfiguration(INetConnection netShareConnection)
+        public static INetSharingConfiguration GetConfiguration(INetConnection connection)
         {
-            return SharingManager.get_INetSharingConfigurationForINetConnection(netShareConnection);
+            return SharingManager.get_INetSharingConfigurationForINetConnection(connection);
         }
 
-        public static INetConnectionProps GetProperties(INetConnection netShareConnection)
+        public static INetConnectionProps GetProperties(INetConnection connection)
         {
-            return SharingManager.get_NetConnectionProps(netShareConnection);
+            return SharingManager.get_NetConnectionProps(connection);
         }
 
 

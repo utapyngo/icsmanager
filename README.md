@@ -9,8 +9,8 @@ I wrote it because the `netsh routing` command which could be used for this in W
 Requirements
 ------------
 
-* Windows 7 or 8.
-* .NET Framework 3.5 or 4.0.
+* Windows 7 or higher.
+* .NET Framework 4.0.
 
 
 Building
@@ -49,4 +49,25 @@ Enable connection sharing. Use the `force` argument if you want to automatically
     icsmanager disable
 
 Disable connection sharing.
+
+---
+
+Powershell
+----------
+
+0. Import module:
+
+    Import-Module IcsManager.dll
+
+0. List network connections:
+
+    Get-NetworkConnections
+
+0. Start Internet Connection Sharing:
+
+    Enable-ICS "Connection to share" "Home connection"
+
+0. Stop Internet Connection Sharing:
+
+    Disable-ICS
 

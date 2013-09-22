@@ -12,12 +12,7 @@ namespace IcsManagerConsole
     {
         static void Info()
         {
-            var ethernetIPv4Nics =
-                from nic in NetworkInterface.GetAllNetworkInterfaces()
-                where nic.Supports(NetworkInterfaceComponent.IPv4)
-                where nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet
-                select nic;
-            foreach (var nic in ethernetIPv4Nics)
+            foreach (var nic in IcsManager.GetIPv4EthernetInterfaces())
             {
                 Console.WriteLine(
                             "Name .......... : {0}", nic.Name);
@@ -43,13 +38,13 @@ namespace IcsManagerConsole
                 }
                 try
                 {
-                    var netShareConnection = IcsManager.GetConnectionById(nic.Id);
-                    if (netShareConnection != null)
+                    var connection = IcsManager.GetConnectionById(nic.Id);
+                    if (connection != null)
                     {
-                        var props = IcsManager.GetProperties(netShareConnection);
+                        var props = IcsManager.GetProperties(connection);
                         Console.WriteLine(
                             "Device ........ : {0}", props.DeviceName);
-                        var sc = IcsManager.GetConfiguration(netShareConnection);
+                        var sc = IcsManager.GetConfiguration(connection);
                         if (sc.SharingEnabled)
                             Console.WriteLine(
                                 "SharingType ... : {0}", sc.SharingConnectionType);
@@ -177,7 +172,7 @@ namespace IcsManagerConsole
                     }
                 }
             }
-            catch (NotImplementedException e)
+            catch (NotImplementedException)
             {
                 Console.WriteLine("This program is not supported on your operating system.");
             }
