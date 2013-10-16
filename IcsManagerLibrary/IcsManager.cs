@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using NETCONLib;
@@ -14,7 +15,8 @@ namespace IcsManagerLibrary
             return
                 from nic in NetworkInterface.GetAllNetworkInterfaces()
                 where nic.Supports(NetworkInterfaceComponent.IPv4)
-                where nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet
+                where (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                   || (nic.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
                 select nic;
         }
 
@@ -38,7 +40,7 @@ namespace IcsManagerLibrary
         public static void ShareConnection(INetConnection connectionToShare, INetConnection homeConnection)
         {
             if ((connectionToShare == homeConnection) && (connectionToShare != null))
-                return;
+                throw new ArgumentException("Connections must be different");
             var share = GetCurrentlySharedConnections();
             if (share.SharedConnection != null)
                 GetConfiguration(share.SharedConnection).DisableSharing();

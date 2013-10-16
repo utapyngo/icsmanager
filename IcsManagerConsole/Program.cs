@@ -21,6 +21,9 @@ namespace IcsManagerConsole
                 Console.WriteLine(
                             "Status ........ : {0}", nic.OperationalStatus);
 
+                Console.WriteLine(
+                            "InterfaceType . : {0}", nic.NetworkInterfaceType);
+
                 if (nic.OperationalStatus == OperationalStatus.Up)
                 {
                     var ipprops = nic.GetIPProperties();
