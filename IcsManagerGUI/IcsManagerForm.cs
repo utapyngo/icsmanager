@@ -66,7 +66,7 @@ namespace IcsManagerGUI
         {
             cbSharedConnection.Items.Clear();
             cbHomeConnection.Items.Clear();
-            foreach (var nic in IcsManager.GetIPv4EthernetInterfaces())
+            foreach (var nic in IcsManager.GetIPv4EthernetAndWirelessInterfaces())
             {
                 AddNic(nic);
             }

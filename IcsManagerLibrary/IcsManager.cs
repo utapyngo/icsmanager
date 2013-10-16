@@ -10,7 +10,7 @@ namespace IcsManagerLibrary
     {
         private static readonly INetSharingManager SharingManager = new NetSharingManager();
 
-        public static IEnumerable<NetworkInterface> GetIPv4EthernetInterfaces()
+        public static IEnumerable<NetworkInterface> GetIPv4EthernetAndWirelessInterfaces()
         {
             return
                 from nic in NetworkInterface.GetAllNetworkInterfaces()

@@ -7,7 +7,7 @@ namespace IcsManagerLibrary
     {
         protected override void ProcessRecord()
         {
-            foreach (var nic in IcsManager.GetIPv4EthernetInterfaces())
+            foreach (var nic in IcsManager.GetIPv4EthernetAndWirelessInterfaces())
             {
                 var connection = IcsManager.GetConnectionById(nic.Id);
                 var properties = IcsManager.GetProperties(connection);
