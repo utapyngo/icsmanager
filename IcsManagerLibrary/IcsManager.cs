@@ -17,6 +17,7 @@ namespace IcsManagerLibrary
                 where nic.Supports(NetworkInterfaceComponent.IPv4)
                 where (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                    || (nic.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+                   || (nic.NetworkInterfaceType == NetworkInterfaceType.GigabitEthernet)
                 select nic;
         }
 
@@ -81,9 +82,21 @@ namespace IcsManagerLibrary
 
         public static INetConnection GetConnectionById(string guid)
         {
-            return (from INetConnection c in GetAllConnections()
-                    where GetProperties(c).Guid == guid
-                    select c).DefaultIfEmpty(null).First();
+            INetSharingEveryConnectionCollection connections = GetAllConnections();
+            foreach (INetConnection c in connections)
+            {
+                try
+                {
+                    INetConnectionProps props = GetProperties(c);
+                    if (props.Guid == guid)
+                        return c;
+                }
+                catch
+                {
+                     // Ignore these  It'ts known that Tunnel adapter isatap   causes getProperties to fail. 
+                }
+            }
+            return null;
         }
 
         public static INetConnection GetConnectionByName(string name)
