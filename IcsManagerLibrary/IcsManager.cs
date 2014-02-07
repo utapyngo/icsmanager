@@ -23,18 +23,28 @@ namespace IcsManagerLibrary
 
         public static NetShare GetCurrentlySharedConnections()
         {
-            INetConnection sharedConnection = (
-                from INetConnection c in SharingManager.EnumEveryConnection
-                where GetConfiguration(c).SharingEnabled
-                where GetConfiguration(c).SharingConnectionType ==
-                    tagSHARINGCONNECTIONTYPE.ICSSHARINGTYPE_PUBLIC
-                select c).DefaultIfEmpty(null).First();
-            INetConnection homeConnection = (
-                from INetConnection c in SharingManager.EnumEveryConnection
-                where GetConfiguration(c).SharingEnabled
-                where GetConfiguration(c).SharingConnectionType ==
-                    tagSHARINGCONNECTIONTYPE.ICSSHARINGTYPE_PRIVATE
-                select c).DefaultIfEmpty(null).First();
+            INetConnection sharedConnection = null;
+            INetConnection homeConnection = null;
+            INetSharingEveryConnectionCollection connections = SharingManager.EnumEveryConnection;
+            foreach (INetConnection c in connections)
+            {
+                try
+                {
+
+                    INetSharingConfiguration config = GetConfiguration(c);
+                    if (config.SharingEnabled)
+                    {
+                        if (config.SharingConnectionType == tagSHARINGCONNECTIONTYPE.ICSSHARINGTYPE_PUBLIC)
+                            sharedConnection = c;
+                        else if (config.SharingConnectionType == tagSHARINGCONNECTIONTYPE.ICSSHARINGTYPE_PRIVATE)
+                            homeConnection = c;
+                    }
+                }
+                catch (System.Runtime.InteropServices.ExternalException)
+                {
+                }
+            }
+
             return new NetShare(sharedConnection, homeConnection);
         }
 
@@ -91,8 +101,8 @@ namespace IcsManagerLibrary
                     if (props.Guid == guid)
                         return c;
                 }
-                catch
-                {
+                catch (System.Runtime.InteropServices.ExternalException)
+                { 
                      // Ignore these  It'ts known that Tunnel adapter isatap   causes getProperties to fail. 
                 }
             }
@@ -101,9 +111,21 @@ namespace IcsManagerLibrary
 
         public static INetConnection GetConnectionByName(string name)
         {
-            return (from INetConnection c in GetAllConnections()
-                    where GetProperties(c).Name == name
-                    select c).DefaultIfEmpty(null).First();
+            INetSharingEveryConnectionCollection connections = GetAllConnections();
+            foreach (INetConnection c in connections)
+            {
+                try
+                {
+                    INetConnectionProps props = GetProperties(c);
+                    if (props.Name == name)
+                        return c;
+                }
+                catch (System.Runtime.InteropServices.ExternalException)
+                {
+                    // Ignore these  It'ts known that Tunnel adapter isatap   causes getProperties to fail. 
+                }
+            }
+            return null;
         }
 
     }
