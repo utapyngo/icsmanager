@@ -12,7 +12,7 @@ namespace IcsManagerConsole
     {
         static void Info()
         {
-            foreach (var nic in IcsManager.GetIPv4EthernetAndWirelessInterfaces())
+            foreach (var nic in IcsManager.GetAllIPv4Interfaces())
             {
                 Console.WriteLine(
                             "Name .......... : {0}", nic.Name);

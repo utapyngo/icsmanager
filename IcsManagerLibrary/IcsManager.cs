@@ -17,6 +17,15 @@ namespace IcsManagerLibrary
                 where nic.Supports(NetworkInterfaceComponent.IPv4)
                 where (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                    || (nic.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+                   || (nic.NetworkInterfaceType == NetworkInterfaceType.GigabitEthernet)
+                select nic;
+        }
+        
+        public static IEnumerable<NetworkInterface> GetAllIPv4Interfaces()
+        {
+            return
+                from nic in NetworkInterface.GetAllNetworkInterfaces()
+                where nic.Supports(NetworkInterfaceComponent.IPv4)
                 select nic;
         }
 
