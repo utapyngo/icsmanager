@@ -12,8 +12,6 @@ Requirements
 * Windows 7 or higher.
 * .NET Framework 4.0.
 
-Install System.Management.Automation
-------------------------------------
 It seems that `System.Management.Automation` is no longer supported by .NET.
 There is an unofficial package https://www.nuget.org/packages/System.Management.Automation.
 
@@ -21,7 +19,6 @@ You can install it in Visual Studio by open **Tools** > **NuGet Package Manager*
 
 
     PM> Install-Package System.Management.Automation -Version 6.1.7601.17515
-
 
 Building
 --------
