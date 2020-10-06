@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using NETCONLib;
+using System.Management;
 
 namespace IcsManagerLibrary
 {
@@ -20,7 +21,7 @@ namespace IcsManagerLibrary
                    || (nic.NetworkInterfaceType == NetworkInterfaceType.GigabitEthernet)
                 select nic;
         }
-        
+
         public static IEnumerable<NetworkInterface> GetAllIPv4Interfaces()
         {
             return
@@ -50,6 +51,9 @@ namespace IcsManagerLibrary
         {
             if ((connectionToShare == homeConnection) && (connectionToShare != null))
                 throw new ArgumentException("Connections must be different");
+
+            CleanupWMISharingEntries();
+
             var share = GetCurrentlySharedConnections();
             if (share.SharedConnection != null)
                 GetConfiguration(share.SharedConnection).DisableSharing();
@@ -66,6 +70,27 @@ namespace IcsManagerLibrary
                 hc.EnableSharing(tagSHARINGCONNECTIONTYPE.ICSSHARINGTYPE_PRIVATE);
             }
         }
+
+        public static void CleanupWMISharingEntries()
+        {
+            var scope = new ManagementScope("root\\Microsoft\\HomeNet");
+            scope.Connect();
+
+            var options = new PutOptions();
+            options.Type = PutType.UpdateOnly;
+
+            var query = new ObjectQuery("SELECT * FROM HNet_ConnectionProperties");
+            var srchr = new ManagementObjectSearcher(scope, query);
+            foreach (ManagementObject entry in srchr.Get())
+            {
+                if ((bool)entry["IsIcsPrivate"])
+                    entry["IsIcsPrivate"] = false;
+                if ((bool)entry["IsIcsPublic"])
+                    entry["IsIcsPublic"] = false;
+                entry.Put(options);
+            }
+        }
+
 
         public static INetSharingConfiguration GetConfiguration(INetConnection connection)
         {
